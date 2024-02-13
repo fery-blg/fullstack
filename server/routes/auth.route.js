@@ -14,6 +14,8 @@ try {
 
 })
 router.post("/register", authcontr.register );
+router.post("/login", authcontr.login );
+
 
 
 module.exports = router
