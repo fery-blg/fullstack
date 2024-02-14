@@ -21,3 +21,22 @@ export async function register(username, email, password) {
     return error;
   }
 }
+
+export const login = async (email, password) => {
+ try{ 
+  return await axiosClient.post(
+    "/login",
+    { email: email, password: password },
+    {
+      withCredentials: true,
+     
+      
+    }
+  ) 
+
+}
+ catch (error){
+  console.log(error.response.data.message);
+  toast.error(error.response.data.message);
+     return error;
+}};

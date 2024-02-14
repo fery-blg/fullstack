@@ -127,14 +127,14 @@ export function Menu() {
         {/* <div className="hidden lg:block">{navList}</div> */}
         <div className="flex items-center gap-x-1">
           <Button variant="text" size="sm" className="hidden lg:inline-block">
-            <span>Log In</span>
+           <a href="/Login"><span>Log In</span></a> 
           </Button>
           <Button
             variant="gradient"
             size="sm"
             className="hidden lg:inline-block"
           >
-            <span>Sign in</span>
+           <a href="/Register"> <span >Sign in</span></a>
           </Button>
         </div>
         <IconButton
