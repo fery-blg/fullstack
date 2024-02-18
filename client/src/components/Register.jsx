@@ -24,7 +24,7 @@ export function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-green-400 to-blue-500">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-purple-400 to-pink-500">
       <Card color="transparent" shadow={false} className="border border-gray-300 p-8 transform transition-transform duration-500 hover:scale-105 bg-white">
         <Typography variant="h4" color="blue-gray" className="text-center">
           Sign Up
@@ -98,7 +98,7 @@ export function Register() {
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Already have an account?{" "}
-            <a href="#Login" className="font-medium text-gray-900">
+            <a href="Login" className="font-medium text-gray-900">
               Sign In
             </a>
           </Typography>
@@ -107,3 +107,4 @@ export function Register() {
     </div>
   );
 }
+  

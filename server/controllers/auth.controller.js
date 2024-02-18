@@ -44,7 +44,7 @@ const login = async (req, res) => {
         res.cookie("Authorzation", token)
           .json({
             message: "found user",
-            data: {
+            user: {
               username: isUser.username,
               email: isUser.email,
               role: isUser.role,

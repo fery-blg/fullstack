@@ -1,14 +1,18 @@
 import { useState } from "react"
 import { login } from "../service/service";
+import { useUser } from "../store/userstore";
 
 export function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [setUser] = useUser((state) => [ state.setUser]);
+
 
     const handelLogin = async () => {
         setLoading(true);
         const res = await login(email, password);
+        setUser(res.data.user)
         setLoading(false);
         return res;
     }
