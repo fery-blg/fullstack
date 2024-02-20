@@ -5,19 +5,22 @@ import { Menu } from './components/Menu'
 import { Register } from './components/Register'
 import {Login } from './components/Login'
 import {Profile } from './components/Profile'
-import { Auth } from './components/Auth'
+import { AuthProvider } from './context/AuthContext'
+import { Public } from './components/Public'
+import { Auth } from './service/Auth'
 function App() {
  
   return (
     <>
      <Menu/>
     <Routes>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/login" element={<Auth>
-              <Login />
-            </Auth>}/>
+      <Route path="/register" element={<AuthProvider><Register/></AuthProvider>}/>
+      <Route path="/login" element={<Public>
+        <AuthProvider>
+              <Login /></AuthProvider>
+            </Public>}/>
+      <Route path="/profile" element={<Auth><Profile/></Auth>}/>
       <Route path="*" element={<Navigate/>}/>
-      <Route path="/profile" element={<Profile/>}/>
 
       
 

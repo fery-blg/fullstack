@@ -5,106 +5,96 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { useState } from "react";
-import toast from "react-hot-toast";
 
+import { Link } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+import AuthContext from "../context/AuthContext";
+import { useContext } from "react";
 import { register } from "../service/service";
 
 export function Register() {
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handelRegister = async (e) => {
-    e.preventDefault();
-
-    const response = await register(username, email, password);
-
-    return response;
-  };
-
+  const { RegisterSchema, handelRegister } = useContext(AuthContext);
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-purple-400 to-pink-500">
-      <Card color="transparent" shadow={false} className="border border-gray-300 p-8 transform transition-transform duration-500 hover:scale-105 bg-white">
-        <Typography variant="h4" color="blue-gray" className="text-center">
-          Sign Up
-        </Typography>
-        <Typography color="gray" className="mt-1 font-normal text-center">
-          Nice to meet you! Enter your details to register.
-        </Typography>
-        <form
-          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-          onSubmit={handelRegister}
+    <>
+      <div className="w-full p-6 m-auto rounded-md shadow-xl lg:max-w-xl bg-gradient-to-br from-purple-600 via-blue-400 to-blue-200 duration-500">
+        <h1 className="text-3xl font-semibold text-center text-black-700 uppercase">
+          Sign up
+        </h1>
+        <Formik
+          initialValues={{
+            username: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={RegisterSchema}
+          onSubmit={async (values) => {
+            await handelRegister(values.username, values.email, values.password);
+          }}
         >
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Your username
-            </Typography>
-            <Input
-              onChange={(e) => setUserName(e.target.value)}
-              size="lg"
-              placeholder="username@mail.com"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Your Email
-            </Typography>
-            <Input
-              onChange={(e) => setEmail(e.target.value)}
-              size="lg"
-              placeholder="name@mail.com"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Password
-            </Typography>
-            <Input
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              size="lg"
-              placeholder="********"
-              className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-          </div>
-          <Checkbox
-            label={
-              <Typography
-                variant="small"
-                color="gray"
-                className="flex items-center font-normal"
-              >
-                I agree the
-                <a
-                  href="#"
-                  className="font-medium transition-colors hover:text-gray-900"
+          {({ errors, touched }) => (
+            <Form className="mt-6">
+              <div className="mb-2">
+                <label
+                  htmlFor="username"
+                  className="block text-sm font-semibold text-gray-800"
                 >
-                  &nbsp;Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
-          <Button type="submit" className="mt-6" fullWidth>
-            sign up
-          </Button>
-          <Typography color="gray" className="mt-4 text-center font-normal">
-            Already have an account?{" "}
-            <a href="Login" className="font-medium text-gray-900">
-              Sign In
-            </a>
-          </Typography>
-        </form>
-      </Card>
-    </div>
+                  Username
+                </label>
+                <Field
+                  className="opacity-70 block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  name="username"
+                />
+                {errors.username && touched.username ? <div>{errors.username}</div> : null}
+              </div>
+              <div className="mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-semibold text-gray-800"
+                >
+                  Email
+                </label>
+                <Field
+                  className="opacity-70 block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  name="email"
+                />
+                {errors.email && touched.email ? <div>{errors.email}</div> : null}
+              </div>
+              <div className="mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-gray-800"
+                >
+                  Password
+                </label>
+                <Field
+                  type="password"
+                  className="block opacity-70 w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  name="password"
+                />
+                {errors.password && touched.password ? <div>{errors.password}</div> : null}
+              </div>
+              <div className="mt-6">
+                <button
+                  type="submit"
+                  name="submit"
+                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+                >
+                  Register
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+        <p className="mt-8 text-xs font-light text-center text-gray-700">
+          Already registered?{" "}
+          <Link
+            to="/login"
+            className="font-medium text-purple-600 hover:underline"
+          >
+            Login
+          </Link>
+        </p>
+      </div>
+    </>
   );
 }
-  

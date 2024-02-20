@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { useUser } from "../store/userstore";
 import { logout } from "../service/service"
+import { Link } from "react-router-dom";
 export function Menu() {
   const [user, setUser] = useUser((state) => [state.user, state.setUser])
 
@@ -30,13 +31,13 @@ export function Menu() {
         <div className="flex items-center gap-x-4">
       
           <Button variant="solid" size="sm" color="lightBlue">
-            <a href="/Login">Log In</a>
+            <Link to="/Login">Log In</Link>
           </Button>
           <Button variant="solid" size="sm" color="lightBlue">
-            <a href="/Register">Sign Up</a>
+            <Link to="/Register">Sign Up</Link>
           </Button>
           <Button variant="solid" size="sm" color="lightBlue">
-            <a href="/Profile">Profile</a>
+            <Link to="/profile">Profile</Link>
           </Button>
           {user._id && <button onClick={() => {
         logout(); setUser({})

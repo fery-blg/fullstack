@@ -1,47 +1,66 @@
-import { useState } from "react"
-import { login } from "../service/service";
-import { useUser } from "../store/userstore";
+import { Formik, Form, Field } from "formik";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [setUser] = useUser((state) => [ state.setUser]);
-
-
-    const handelLogin = async () => {
-        setLoading(true);
-        const res = await login(email, password);
-        setUser(res.data.user)
-        setLoading(false);
-        return res;
-    }
-
-    return (
-        <>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "50px", transition: "all 0.3s ease" }}>
-                <h1 style={{ marginBottom: "20px", transition: "all 0.3s ease" }}>Login</h1>
-                <input
-                    style={{ marginBottom: "10px", padding: "5px", width: "300px", borderRadius: "5px", border: "1px solid #ccc", transition: "all 0.3s ease" }}
-                    onChange={(e) => { setEmail(e.target.value) }}
-                    type="email"
-                    placeholder="example@example.com"
+  const { LoginSchema, handelLogin } = useContext(AuthContext);
+  return (
+    <>
+      <div className="w-full p-6 m-auto rounded-md shadow-xl lg:max-w-xl bg-gradient-to-br from-purple-600 via-blue-400 to-blue-200 duration-500">
+        <h1 className="text-3xl font-semibold text-center text-black-700 uppercase" style={{ marginBottom: "20px", transition: "all 0.3s ease" }}>Login</h1>
+        <Formik
+          initialValues={{
+            email: "",
+            password: ""
+          }}
+          validationSchema={LoginSchema}
+          onSubmit={async (values) => await handelLogin(values.email, values.password)}
+        >
+          {({ errors, touched }) => (
+            <Form className="mt-6">
+              <div className="mb-2">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <Field
+                  className="opacity-70 block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  name="email"
                 />
-                <input
-                    style={{ marginBottom: "10px", padding: "5px", width: "300px", borderRadius: "5px", border: "1px solid #ccc", transition: "all 0.3s ease" }}
-                    onChange={(e) => { setPassword(e.target.value) }}
-                    type="password"
-                    placeholder="**********"
+                {errors.email && touched.email ? <div>{errors.email}</div> : null}
+              </div>
+              <div className="mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-semibold text-gray-800"
+                >Password</label>
+                <Field
+                  type="password"
+                  className="opacity-70 block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  name="password"
                 />
+                {errors.password && touched.password ? <div>{errors.password}</div> : null}
+              </div>
+              <div className="mt-6">
                 <button
-                    style={{ padding: "5px 10px", borderRadius: "5px", border: "1px solid #007bff", backgroundColor: "#007bff", color: "#fff", cursor: "pointer", transition: "all 0.3s ease" }}
-                    onClick={handelLogin}
-                    disabled={loading}
+                  type="submit"
+                  name="submit"
+                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                 >
-                    {loading ? "Logging in..." : "Login"}
+                  Login
                 </button>
-            </div>
-            <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: -1, background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)" }}></div>
-        </>
-    )
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+      <p className="mt-8 text-xs font-light text-center text-gray-700">
+        Don't have an account?{" "}
+        <Link
+          to="/register"
+          className="font-medium text-purple-600 hover:underline"
+        >
+          Sign up
+        </Link>
+      </p>
+    </>
+  );
 }
