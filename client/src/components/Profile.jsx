@@ -1,5 +1,6 @@
 import { useUser } from "../store/userstore";
-import "Profile.css"
+import "./profile.css";
+
 // Bubble component
 const Bubbles = () => {
   const emojis = ["😊", "😄", "😃", "😁", "😆", "😅", "😂", "🤣", "😇", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜"];

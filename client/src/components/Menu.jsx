@@ -38,9 +38,9 @@ export function Menu() {
           <Button variant="solid" size="sm" color="lightBlue">
             <Link to="/Register">Sign Up</Link>
           </Button>
-          <Button variant="solid" size="sm" color="lightBlue">
-            <Link to="/profile">Profile</Link>
-          </Button>
+       {   user._id && <Button variant="solid" size="sm" color="lightBlue">
+           <Link to="/profile">Profile</Link> 
+          </Button>}
 
           {user._id && <button onClick={() => {
         logout(); setUser({})
