@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const register = async (req, res) => {
   console.log(req.body);
   try {
+    console.log(req.body)
     const isUser = await User.findOne({ email: req.body.email });
     console.log(isUser);
     if (isUser) {
@@ -19,8 +20,10 @@ const register = async (req, res) => {
       });
       return res.status(201).json({ message: "account created succefully" });
     }
-  } catch (error) { }
-  res.status(500).json({ message: "error" });
+  } catch (error) {
+    console.log(error);
+   
+  res.status(500).json({ message: error });}
 };
 
 const login = async (req, res) => {
@@ -41,7 +44,7 @@ const login = async (req, res) => {
           { id: isUser._id, exp, role: isUser.role },
           process.env.SECRET_KEY)
           console.log(process.env.SECRET_KEY)
-        res.cookie("Authorzation", token)
+        res.cookie("Authorization", token)
           .json({
             message: "found user",
             user: {
@@ -60,4 +63,8 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const logout = async (req, res) => {
+  res.clearCookie("Authorization");
+  res.status(200).json({ message: "logged out" });
+};
+module.exports = { register, login, logout };

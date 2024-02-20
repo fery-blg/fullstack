@@ -7,6 +7,7 @@ import {Login } from './components/Login'
 import {Profile } from './components/Profile'
 import { AuthProvider } from './context/AuthContext'
 import { Public } from './components/Public'
+import { Home } from './components/Home'
 import { Auth } from './service/Auth'
 function App() {
  
@@ -14,6 +15,7 @@ function App() {
     <>
      <Menu/>
     <Routes>
+      <Route path='/' element={<Home/>}/>
       <Route path="/register" element={<AuthProvider><Register/></AuthProvider>}/>
       <Route path="/login" element={<Public>
         <AuthProvider>

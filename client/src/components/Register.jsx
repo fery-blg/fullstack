@@ -1,16 +1,8 @@
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
 
 import { Link } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import AuthContext from "../context/AuthContext";
 import { useContext } from "react";
-import { register } from "../service/service";
 
 export function Register() {
   const { RegisterSchema, handelRegister } = useContext(AuthContext);

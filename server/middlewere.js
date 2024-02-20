@@ -7,4 +7,10 @@ function checkAuth (req , res , next) {
 
         if (decoded && decoded.exp < Date.now()) {
             res.clear
-    }
+    }} catch (error) {
+        res.status(401).json({message: 'Unauthorized'})
+    }}
+
+    module.exports = {
+        checkAuth,
+      };
